@@ -11,5 +11,6 @@
 <url> <loc>https://tevelee.github.io/Tuxedo/docs/data-types.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://tevelee.github.io/Tuxedo/docs/data-types.html" /> </url>
 <url> <loc>https://tevelee.github.io/Tuxedo/docs/functions.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://tevelee.github.io/Tuxedo/docs/functions.html" /> </url>
 <url> <loc>https://tevelee.github.io/Tuxedo/docs/tags.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://tevelee.github.io/Tuxedo/docs/tags.html" /> </url>
+<url> <loc>https://tevelee.github.io/Tuxedo/docs/variables.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://tevelee.github.io/Tuxedo/docs/variables.html" /> </url>
 <url> <loc>https://tevelee.github.io/Tuxedo/docs/reference.html</loc> <changefreq>hourly</changefreq> <priority>1.0</priority> <xhtml:link rel="alternate" hreflang="en" href="https://tevelee.github.io/Tuxedo/docs/reference.html" /> </url>
 </urlset>
