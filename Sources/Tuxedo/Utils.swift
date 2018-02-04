@@ -10,15 +10,15 @@ public extension DateFormatter {
 
 extension Character: Strideable {
     public typealias Stride = Int
-    
+
     var value: UInt32 {
         return unicodeScalars.first?.value ?? 0
     }
-    
+
     public func distance(to other: Character) -> Int {
         return Int(other.value) - Int(self.value)
     }
-    
+
     public func advanced(by offset: Int) -> Character {
         let advancedValue = offset + Int(self.value)
         guard let advancedScalar = UnicodeScalar(advancedValue) else {
@@ -65,7 +65,7 @@ extension String {
          "σ": "&sigma;", "Σ": "&Sigma;", "ς": "&sigmaf;", "τ": "&tau;", "Τ": "&Tau;", "ϒ": "&upsih;", "υ": "&upsilon;",
          "Υ": "&Upsilon;", "φ": "&phi;", "Φ": "&Phi;", "χ": "&chi;", "Χ": "&Chi;", "ψ": "&psi;", "Ψ": "&Psi;",
          "ω": "&omega;", "Ω": "&Omega;", "ℵ": "&alefsym;"]
-    
+
     var html: String {
         var html = ""
         for c in self {

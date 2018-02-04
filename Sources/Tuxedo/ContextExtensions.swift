@@ -13,7 +13,7 @@ extension Context {
             variables[Context.macrosKey] = macros.merging(newValue) { _, new in new }
         }
     }
-    
+
     static let blocksKey: String = "__blocks"
     var blocks: [String: [BlockRenderer]] {
         get {

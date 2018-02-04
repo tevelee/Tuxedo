@@ -1,7 +1,7 @@
 import Foundation
 
-extension StandardLibrary {
-    public static var tags: [Pattern<String, TemplateInterpreter<String>>] {
+public extension StandardLibrary {
+    static var tags: [Pattern<String, TemplateInterpreter<String>>] {
         return [
             ifElseStatement,
             ifStatement,
@@ -16,48 +16,48 @@ extension StandardLibrary {
             spacelessStatement
         ]
     }
-    
-    public static var tagPrefix: String = "{%"
-    public static var tagSuffix: String = "%}"
-    
-    public static var ifStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var tagPrefix: String = "{%"
+    static var tagSuffix: String = "%}"
+
+    static var ifStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([Keyword(tagPrefix + " if"), Variable<Bool>("condition"), Keyword(tagSuffix), TemplateVariable("body", options: .notTrimmed) { value, _ in
             guard let content = value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
             return content
-            }, Keyword("{%"), Keyword("endif"), Keyword("%}")]) { variables, _, _ in
-                guard let condition = variables["condition"] as? Bool, let body = variables["body"] as? String else { return nil }
-                if condition {
-                    return body
-                }
-                return ""
+        }, Keyword("{%"), Keyword("endif"), Keyword("%}")]) { variables, _, _ in
+            guard let condition = variables["condition"] as? Bool, let body = variables["body"] as? String else { return nil }
+            if condition {
+                return body
+            }
+            return ""
         }
     }
-    
-    public static var ifElseStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var ifElseStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " if"), Variable<Bool>("condition"), Keyword(tagSuffix), TemplateVariable("body", options: .notTrimmed) { value, _ in
             guard let content = value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
             return content
-            }, Keyword(tagPrefix + " else " + tagSuffix), TemplateVariable("else", options: .notTrimmed) { value, _ in
-                guard let content = value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
-                return content
-            }, CloseKeyword(tagPrefix + " endif " + tagSuffix)]) { variables, _, _ in
-                guard let condition = variables["condition"] as? Bool, let body = variables["body"] as? String else { return nil }
-                if condition {
-                    return body
-                } else {
-                    return variables["else"] as? String
-                }
+        }, Keyword(tagPrefix + " else " + tagSuffix), TemplateVariable("else", options: .notTrimmed) { value, _ in
+            guard let content = value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
+            return content
+        }, CloseKeyword(tagPrefix + " endif " + tagSuffix)]) { variables, _, _ in
+            guard let condition = variables["condition"] as? Bool, let body = variables["body"] as? String else { return nil }
+            if condition {
+                return body
+            } else {
+                return variables["else"] as? String
+            }
         }
     }
-    
-    public static var printStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var printStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword("{{"), Variable<Any>("body"), CloseKeyword("}}")]) { variables, interpreter, _ in
             guard let body = variables["body"] else { return nil }
             return interpreter.typedInterpreter.print(body)
         }
     }
-    
-    public static var forInStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var forInStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " for"),
                         GenericVariable<String, StringTemplateInterpreter>("variable", options: .notInterpreted), Keyword("in"),
                         Variable<[Any]>("items"),
@@ -80,24 +80,24 @@ extension StandardLibrary {
                             return result
         }
     }
-    
-    public static var setStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var setStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " set"), TemplateVariable("variable"), Keyword(tagSuffix), TemplateVariable("body"), CloseKeyword(tagPrefix + " endset " + tagSuffix)]) { variables, interpreter, context in
             guard let variableName = variables["variable"] as? String, let body = variables["body"] as? String else { return nil }
             interpreter.context.variables[variableName] = body
             return ""
         }
     }
-    
-    public static var setUsingBodyStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var setUsingBodyStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " set"), TemplateVariable("variable"), Keyword("="), Variable<Any>("value"), CloseKeyword(tagSuffix)]) { variables, interpreter, context in
             guard let variableName = variables["variable"] as? String else { return nil }
             interpreter.context.variables[variableName] = variables["value"]
             return ""
         }
     }
-    
-    public static var blockStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var blockStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " block"),
                         GenericVariable<String, StringTemplateInterpreter>("name", options: .notInterpreted),
                         Keyword(tagSuffix),
@@ -124,25 +124,25 @@ extension StandardLibrary {
                             }
         }
     }
-    
-    public static var macroStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var macroStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " macro"), GenericVariable<String, StringTemplateInterpreter>("name", options: .notInterpreted), Keyword("("), GenericVariable<[String], StringTemplateInterpreter>("arguments", options: .notInterpreted) { arguments, _ in
             guard let arguments = arguments as? String else { return nil }
             return arguments.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            }, Keyword(")"), Keyword(tagSuffix), GenericVariable<String, StringTemplateInterpreter>("body", options: .notInterpreted), CloseKeyword(tagPrefix + " endmacro " + tagSuffix)]) { variables, interpreter, context in
-                guard let name = variables["name"] as? String,
-                    let arguments = variables["arguments"] as? [String],
-                    let body = variables["body"] as? String else { return nil }
-                interpreter.context.macros[name] = (arguments: arguments, body: body)
-                return ""
+        }, Keyword(")"), Keyword(tagSuffix), GenericVariable<String, StringTemplateInterpreter>("body", options: .notInterpreted), CloseKeyword(tagPrefix + " endmacro " + tagSuffix)]) { variables, interpreter, context in
+            guard let name = variables["name"] as? String,
+                let arguments = variables["arguments"] as? [String],
+                let body = variables["body"] as? String else { return nil }
+            interpreter.context.macros[name] = (arguments: arguments, body: body)
+            return ""
         }
     }
-    
-    public static var commentStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var commentStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword("{#"), GenericVariable<String, StringTemplateInterpreter>("body", options: .notInterpreted), CloseKeyword("#}")]) { _, _, _ in "" }
     }
-    
-    public static var importStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var importStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " import"), Variable<String>("file"), CloseKeyword(tagSuffix)]) { variables, interpreter, context in
             guard let file = variables["file"] as? String,
                 let url = Bundle.allBundles.flatMap({ $0.url(forResource: file, withExtension: nil) }).first,
@@ -150,8 +150,8 @@ extension StandardLibrary {
             return interpreter.evaluate(expression, context: context)
         }
     }
-    
-    public static var spacelessStatement: Pattern<String, TemplateInterpreter<String>> {
+
+    static var spacelessStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " spaceless " + tagSuffix), TemplateVariable("body"), CloseKeyword(tagPrefix + " endspaceless " + tagSuffix)]) { variables, _, _ in
             guard let body = variables["body"] as? String else { return nil }
             return body.self.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty }.joined()

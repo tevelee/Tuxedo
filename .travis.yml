@@ -1,0 +1,9 @@
+osx_image: xcode9.1
+language: swift
+sudo: true
+before_script:
+- pushd website && npm install && popd
+- sh Scripts/git_auth.sh
+script:
+- travis_retry Scripts/ci.sh
+- sleep 3

@@ -60,7 +60,7 @@ public class Tuxedo {
         }
         return convert(value)
     }
-    
+
     func replaceWhitespaces(_ input: String) -> String {
         let tag = "{-}"
         var input = input

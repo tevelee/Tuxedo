@@ -11,13 +11,13 @@ class TuxedoUnitTests: XCTestCase {
     func testIfStatement() {
         XCTAssertEqual(Tuxedo().evaluate("{% if true %}Hello{% endif %} {{ name }}!", variables: ["name": "Teve"]), "Hello Teve!")
     }
-    
+
     func testEmbeddedIfStatement() {
         XCTAssertEqual(Tuxedo().evaluate("Result: {% if x > 1 %}{% if x < 5 %}1<x<5{% endif %}{% endif %}", variables: ["x": 2]), "Result: 1<x<5")
-        
+
         XCTAssertEqual(Tuxedo().evaluate("Result: {% if x > 1 %}{% if x < 5 %}1<x<5{% endif %}{% else %}x<=1{% endif %}", variables: ["x": 2]), "Result: 1<x<5")
         XCTAssertEqual(Tuxedo().evaluate("Result: {% if x >= 5 %}x>=5{% else %}{% if x > 1 %}1<x<5{% endif %}{% endif %}", variables: ["x": 2]), "Result: 1<x<5")
-        
+
         XCTAssertEqual(Tuxedo().evaluate("Result: {% if x > 1 %}{% if x < 5 %}1<x<5{% else %}x>=5{% endif %}{% else %}x<=1{% endif %}", variables: ["x": 2]), "Result: 1<x<5")
         XCTAssertEqual(Tuxedo().evaluate("Result: {% if x >= 5 %}x>=5{% else %}{% if x > 1 %}1<x<5{% else %}x<=1{% endif %}{% endif %}", variables: ["x": 2]), "Result: 1<x<5")
     }
@@ -65,12 +65,12 @@ class TuxedoUnitTests: XCTestCase {
         XCTAssertEqual(Tuxedo().evaluate("{% block title5 %}Hello {{name}}{% endblock %}{% block title5 %}{{ parent() }}!{% endblock %}", variables: ["name": "George"]), "Hello George!")
         XCTAssertEqual(Tuxedo().evaluate("{% block title6 %}Hello {{name}}{% endblock %}{% block title6 %}{{ parent(name='Laszlo') }}!{% endblock %}", variables: ["name": "Geroge"]), "Hello Laszlo!")
     }
-    
+
     func testSpaceElimination() {
         XCTAssertEqual(Tuxedo().evaluate("asd   {-}   jkl"), "asdjkl")
         XCTAssertEqual(Tuxedo().evaluate("{-}   jkl"), "jkl")
         XCTAssertEqual(Tuxedo().evaluate("asd   {-}"), "asd")
-        
+
         XCTAssertEqual(Tuxedo().evaluate("asd   {-}{% if true %}   Hello   {% endif %}   "), "asd   Hello      ")
         XCTAssertEqual(Tuxedo().evaluate("asd   {-}{% if true %}{-}   Hello   {% endif %}   "), "asdHello      ")
         XCTAssertEqual(Tuxedo().evaluate("asd   {% if true %}   Hello {-}  {% endif %}   "), "asd      Hello   ")
