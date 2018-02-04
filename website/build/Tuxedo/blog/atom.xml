@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://tevelee.github.io/Tuxedo//blog</id>
+    <title>Tuxedo Blog</title>
+    <updated>2018-02-03T06:00:00Z</updated>
+    <generator>Feed for Node.js</generator>
+    <link rel="alternate" href="https://tevelee.github.io/Tuxedo//blog"/>
+    <subtitle>The best place to stay up-to-date with the latest Tuxedo news and events.</subtitle>
+    <logo>https://tevelee.github.io/Tuxedo/img/tuxedo.svg</logo>
+    <rights>Copyright © 2018 Laszlo Teveli</rights>
+    <entry>
+        <title type="html"><![CDATA[Version 1.0]]></title>
+        <id>https://tevelee.github.io/Tuxedo//blog/2018/02/03/version-1.0.html</id>
+        <link href="https://tevelee.github.io/Tuxedo//blog/2018/02/03/version-1.0.html">
+        </link>
+        <updated>2018-02-03T06:00:00Z</updated>
+        <summary type="html"><![CDATA[
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
+
+]]></summary>
+        <author>
+            <name>Laszlo Teveli</name>
+            <uri>http://twitter.com/tevelee</uri>
+        </author>
+    </entry>
+</feed>

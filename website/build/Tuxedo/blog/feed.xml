@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Tuxedo Blog</title>
+        <link>https://tevelee.github.io/Tuxedo//blog</link>
+        <description>The best place to stay up-to-date with the latest Tuxedo news and events.</description>
+        <lastBuildDate>Sat, 03 Feb 2018 06:00:00 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>Feed for Node.js</generator>
+        <image>
+            <title>Tuxedo Blog</title>
+            <url>https://tevelee.github.io/Tuxedo/img/tuxedo.svg</url>
+            <link>https://tevelee.github.io/Tuxedo//blog</link>
+        </image>
+        <copyright>Copyright © 2018 Laszlo Teveli</copyright>
+        <item>
+            <title><![CDATA[Version 1.0]]></title>
+            <link>https://tevelee.github.io/Tuxedo//blog/2018/02/03/version-1.0.html</link>
+            <guid>https://tevelee.github.io/Tuxedo//blog/2018/02/03/version-1.0.html</guid>
+            <pubDate>Sat, 03 Feb 2018 06:00:00 GMT</pubDate>
+            <description><![CDATA[
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum massa eget nulla aliquet sagittis. Proin odio tortor, vulputate ut odio in, ultrices ultricies augue. Cras ornare ultrices lorem malesuada iaculis. Etiam sit amet libero tempor, pulvinar mauris sed, sollicitudin sapien.
+
+]]></description>
+        </item>
+    </channel>
+</rss>
