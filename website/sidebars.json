@@ -6,10 +6,8 @@
       "getting-started",
       "template-features"
     ],
-    "How does it work": [
-      "how-does-it-work"
-    ],
-    "Details": [
+    "Internals": [
+      "how-does-it-work",
       "extending-tuxedo"
     ]
   },
@@ -19,7 +17,11 @@
     ],
     "Elements": [
       "data-types",
+      "variables",
       "functions",
+      "operators",
+      "global_functions",
+      "object_functions",
       "tags"
     ]
   }

@@ -3,4 +3,4 @@ id: template-features
 title: Template features
 ---
 
-TBD
+Coming Soon

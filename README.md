@@ -3,9 +3,9 @@
 [![Travis CI status](https://travis-ci.org/tevelee/Tuxedo.svg?branch=master)](https://travis-ci.org/tevelee/Tuxedo)
 [![Framework version](https://img.shields.io/badge/Version-1.0.0-yellow.svg)]()
 [![Swift version](https://img.shields.io/badge/Swift-4.0-orange.svg)]()
+[![Code Test Coverage](https://codecov.io/gh/tevelee/Tuxedo/branch/master/graph/badge.svg)](https://codecov.io/gh/tevelee/Tuxedo)
 [![Platforms](https://img.shields.io/badge/Platforms-iOS%20|%20macOS%20|%20Linux-blue.svg)]()
 [![Lincese](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tevelee/Tuxedo/tree/master/LICENSE.txt)
-<!-- [![Code Test Coverage](https://codecov.io/gh/tevelee/Tuxedo/branch/master/graph/badge.svg)](https://codecov.io/gh/tevelee/Tuxedo) -->
 
 ##### Dependency Managers
 
@@ -25,7 +25,7 @@
 
 **Tuxedo** is a template language for Swift. It allows you to separate the UI and rendering layer of your application from the business logic. Smart templates working with raw data allow the frontend to be handled and developed separately from other parts of the application, so processing, layouting and formatting your output can be defined in very simple template formats.
 
-Why the name? It dresses up your files with elegant templates, using control statements, and high level operators.
+Why the name? It dresses up your static output with elegant dynamic templates, using control statements, and high level operators.
 
 The project was built upon my lightweight interpreter framework, [Eval](https://github.com/tevelee/Eval), and served as an example application of what is possible using this evaluator. 
 

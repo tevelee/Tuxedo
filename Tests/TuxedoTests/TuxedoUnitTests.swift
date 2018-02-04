@@ -218,25 +218,53 @@ class TuxedoUnitTests: XCTestCase {
         XCTAssertEqual(Tuxedo().evaluate("{{ 3 >= 2 }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 >= 2 }}"), "true")
     }
+    
+    func testEarlier() {
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) < Date(2018,1,2) }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) < Date(2015,1,1) }}"), "false")
+    }
+    
+    func testEarlierOrSame() {
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) <= Date(2018,1,2) }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) <= Date(2018,1,1) }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) <= Date(2015,1,1) }}"), "false")
+    }
+    
+    func testLater() {
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,4) > Date(2018,1,2) }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) > Date(2018,1,2) }}"), "false")
+    }
+    
+    func testLaterOrSame() {
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,4) >= Date(2018,1,2) }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) >= Date(2018,1,2) }}"), "false")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) >= Date(2018,1,1) }}"), "true")
+    }
 
     func testEquals() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 == 3 }}"), "false")
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 == 2 }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) == Date(2018,1,2) }}"), "false")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) == Date(2018,1,1) }}"), "true")
     }
 
     func testNotEquals() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 != 2 }}"), "false")
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 != 3 }}"), "true")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) != Date(2018,1,1) }}"), "false")
+        XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) != Date(2018,1,2) }}"), "true")
     }
 
     func testInNumericArray() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 in [1,2,3] }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ 5 in [1,2,3] }}"), "false")
+        XCTAssertEqual(Tuxedo().evaluate("{{ 5 not in [1,2,3] }}"), "true")
     }
 
     func testInStringArray() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'a' in ['a', 'b', 'c'] }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ 'z' in ['a', 'b', 'c'] }}"), "false")
+        XCTAssertEqual(Tuxedo().evaluate("{{ 'a' not in ['a', 'b', 'c'] }}"), "false")
     }
 
     func testIncrement() {
@@ -413,6 +441,10 @@ class TuxedoUnitTests: XCTestCase {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'a\nb'.nl2br }}"), "a<br/>b")
     }
 
+    func testLength() {
+        XCTAssertEqual(Tuxedo().evaluate("{{ 'hello there'.length }}"), "11")
+    }
+    
     func testCapitalise() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'hello there'.capitalise }}"), "Hello There")
     }

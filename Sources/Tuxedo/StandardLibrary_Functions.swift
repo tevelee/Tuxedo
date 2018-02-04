@@ -21,6 +21,7 @@ public extension StandardLibrary {
             endsWithOperator,
             containsOperator,
             matchesOperator,
+            length,
             capitalise,
             lowercase,
             uppercase,
@@ -50,9 +51,21 @@ public extension StandardLibrary {
 
             stringEqualsOperator,
             stringNotEqualsOperator,
+            
+            dateFactory,
+            dateFormat,
+            
+            dateEarlierOperator,
+            dateEarlierOrSameOperator,
+            dateLaterOperator,
+            dateLaterOrSameOperator,
+            dateEqualsOperator,
+            dateNotEqualsOperator,
 
             inNumericArrayOperator,
+            notInNumericArrayOperator,
             inStringArrayOperator,
+            notInStringArrayOperator,
 
             incrementOperator,
             decrementOperator,
@@ -96,9 +109,6 @@ public extension StandardLibrary {
             dictionaryFilterFunction,
             dictionaryKeys,
             dictionaryValues,
-
-            dateFactory,
-            dateFormat,
 
             stringFactory
         ]
@@ -187,6 +197,10 @@ public extension StandardLibrary {
         }
     }
 
+    static var length: Function<Double> {
+        return objectFunction("length") { (value: String) -> Double? in Double(value.count) }
+    }
+    
     static var capitalise: Function<String> {
         return objectFunction("capitalise") { (value: String) -> String? in value.capitalized }
     }
@@ -267,17 +281,33 @@ public extension StandardLibrary {
     static var lessThanOperator: Function<Bool> {
         return infixOperator("<") { (lhs: Double, rhs: Double) in lhs < rhs }
     }
-
-    static var moreThanOperator: Function<Bool> {
+    
+    static var lessThanOrEqualsOperator: Function<Bool> {
         return infixOperator("<=") { (lhs: Double, rhs: Double) in lhs <= rhs }
     }
 
-    static var lessThanOrEqualsOperator: Function<Bool> {
+    static var moreThanOperator: Function<Bool> {
         return infixOperator(">") { (lhs: Double, rhs: Double) in lhs > rhs }
     }
 
     static var moreThanOrEqualsOperator: Function<Bool> {
         return infixOperator(">=") { (lhs: Double, rhs: Double) in lhs >= rhs }
+    }
+    
+    static var dateEarlierOperator: Function<Bool> {
+        return infixOperator("<") { (lhs: Date, rhs: Date) in lhs < rhs }
+    }
+    
+    static var dateEarlierOrSameOperator: Function<Bool> {
+        return infixOperator("<=") { (lhs: Date, rhs: Date) in lhs <= rhs }
+    }
+    
+    static var dateLaterOperator: Function<Bool> {
+        return infixOperator(">") { (lhs: Date, rhs: Date) in lhs > rhs }
+    }
+    
+    static var dateLaterOrSameOperator: Function<Bool> {
+        return infixOperator(">=") { (lhs: Date, rhs: Date) in lhs >= rhs }
     }
 
     static var equalsOperator: Function<Bool> {
@@ -295,13 +325,29 @@ public extension StandardLibrary {
     static var stringNotEqualsOperator: Function<Bool> {
         return infixOperator("!=") { (lhs: String, rhs: String) in lhs != rhs }
     }
-
+    
+    static var dateEqualsOperator: Function<Bool> {
+        return infixOperator("==") { (lhs: Date, rhs: Date) in lhs == rhs }
+    }
+    
+    static var dateNotEqualsOperator: Function<Bool> {
+        return infixOperator("!=") { (lhs: Date, rhs: Date) in lhs != rhs }
+    }
+    
     static var inStringArrayOperator: Function<Bool> {
         return infixOperator("in") { (lhs: String, rhs: [String]) in rhs.contains(lhs) }
+    }
+    
+    static var notInStringArrayOperator: Function<Bool> {
+        return infixOperator("not in") { (lhs: String, rhs: [String]) in !rhs.contains(lhs) }
     }
 
     static var inNumericArrayOperator: Function<Bool> {
         return infixOperator("in") { (lhs: Double, rhs: [Double]) in rhs.contains(lhs) }
+    }
+    
+    static var notInNumericArrayOperator: Function<Bool> {
+        return infixOperator("not in") { (lhs: Double, rhs: [Double]) in !rhs.contains(lhs) }
     }
 
     static var negationOperator: Function<Bool> {
