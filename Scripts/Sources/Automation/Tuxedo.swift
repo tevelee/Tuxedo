@@ -163,6 +163,7 @@ class Tuxedo {
     static func runCocoaPodsLinter() throws {
         print("🔮 Validating CocoaPods support")
         let flags = TravisCI.isRunningLocally() ? "--verbose" : ""
+        try Shell.executeAndPrint("bundle exec pod repo update", timeout: 300)
         try Shell.executeAndPrint("bundle exec pod lib lint \(flags)", timeout: 300)
     }
 
