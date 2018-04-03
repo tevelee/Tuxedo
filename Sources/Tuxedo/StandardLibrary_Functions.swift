@@ -51,10 +51,10 @@ public extension StandardLibrary {
 
             stringEqualsOperator,
             stringNotEqualsOperator,
-            
+
             dateFactory,
             dateFormat,
-            
+
             dateEarlierOperator,
             dateEarlierOrSameOperator,
             dateLaterOperator,
@@ -200,7 +200,7 @@ public extension StandardLibrary {
     static var length: Function<Double> {
         return objectFunction("length") { (value: String) -> Double? in Double(value.count) }
     }
-    
+
     static var capitalise: Function<String> {
         return objectFunction("capitalise") { (value: String) -> String? in value.capitalized }
     }
@@ -281,7 +281,7 @@ public extension StandardLibrary {
     static var lessThanOperator: Function<Bool> {
         return infixOperator("<") { (lhs: Double, rhs: Double) in lhs < rhs }
     }
-    
+
     static var lessThanOrEqualsOperator: Function<Bool> {
         return infixOperator("<=") { (lhs: Double, rhs: Double) in lhs <= rhs }
     }
@@ -293,19 +293,19 @@ public extension StandardLibrary {
     static var moreThanOrEqualsOperator: Function<Bool> {
         return infixOperator(">=") { (lhs: Double, rhs: Double) in lhs >= rhs }
     }
-    
+
     static var dateEarlierOperator: Function<Bool> {
         return infixOperator("<") { (lhs: Date, rhs: Date) in lhs < rhs }
     }
-    
+
     static var dateEarlierOrSameOperator: Function<Bool> {
         return infixOperator("<=") { (lhs: Date, rhs: Date) in lhs <= rhs }
     }
-    
+
     static var dateLaterOperator: Function<Bool> {
         return infixOperator(">") { (lhs: Date, rhs: Date) in lhs > rhs }
     }
-    
+
     static var dateLaterOrSameOperator: Function<Bool> {
         return infixOperator(">=") { (lhs: Date, rhs: Date) in lhs >= rhs }
     }
@@ -325,19 +325,19 @@ public extension StandardLibrary {
     static var stringNotEqualsOperator: Function<Bool> {
         return infixOperator("!=") { (lhs: String, rhs: String) in lhs != rhs }
     }
-    
+
     static var dateEqualsOperator: Function<Bool> {
         return infixOperator("==") { (lhs: Date, rhs: Date) in lhs == rhs }
     }
-    
+
     static var dateNotEqualsOperator: Function<Bool> {
         return infixOperator("!=") { (lhs: Date, rhs: Date) in lhs != rhs }
     }
-    
+
     static var inStringArrayOperator: Function<Bool> {
         return infixOperator("in") { (lhs: String, rhs: [String]) in rhs.contains(lhs) }
     }
-    
+
     static var notInStringArrayOperator: Function<Bool> {
         return infixOperator("not in") { (lhs: String, rhs: [String]) in !rhs.contains(lhs) }
     }
@@ -345,7 +345,7 @@ public extension StandardLibrary {
     static var inNumericArrayOperator: Function<Bool> {
         return infixOperator("in") { (lhs: Double, rhs: [Double]) in rhs.contains(lhs) }
     }
-    
+
     static var notInNumericArrayOperator: Function<Bool> {
         return infixOperator("not in") { (lhs: Double, rhs: [Double]) in !rhs.contains(lhs) }
     }
@@ -669,7 +669,7 @@ public extension StandardLibrary {
     }
 
     static var methodCallWithIntResult: Function<Double> {
-        return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted)]) { (arguments, _, _) -> Double? in
+        return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted)]) { arguments, _, _ -> Double? in
             if let lhs = arguments["lhs"] as? NSObjectProtocol,
                 let rhs = arguments["rhs"] as? String,
                 let result = lhs.perform(Selector(rhs)) {

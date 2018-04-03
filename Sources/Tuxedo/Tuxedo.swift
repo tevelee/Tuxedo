@@ -1,6 +1,6 @@
 @_exported import Eval
-import Foundation
 @_exported import class Eval.Pattern
+import Foundation
 
 public class Tuxedo {
     public typealias EvaluatedType = String

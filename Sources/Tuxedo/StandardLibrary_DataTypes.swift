@@ -15,12 +15,12 @@ public extension StandardLibrary {
 
     static var numericType: DataType<Double> {
         let numberLiteral = Literal { value, _ in Double(value) }
-        let pi = Literal("pi", convertsTo: Double.pi)
-        return DataType(type: Double.self, literals: [numberLiteral, pi]) { value, _ in String(format: "%g", value) }
+        let piLiteral = Literal("pi", convertsTo: Double.pi)
+        return DataType(type: Double.self, literals: [numberLiteral, piLiteral]) { value, _ in String(format: "%g", value) }
     }
 
     static var stringType: DataType<String> {
-        let singleQuotesLiteral = literal(opening: "'", closing: "'") { (input, _) in input }
+        let singleQuotesLiteral = literal(opening: "'", closing: "'") { input, _ in input }
         return DataType(type: String.self, literals: [singleQuotesLiteral]) { value, _ in value }
     }
 

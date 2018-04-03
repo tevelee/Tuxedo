@@ -218,23 +218,23 @@ class TuxedoUnitTests: XCTestCase {
         XCTAssertEqual(Tuxedo().evaluate("{{ 3 >= 2 }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ 2 >= 2 }}"), "true")
     }
-    
+
     func testEarlier() {
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) < Date(2018,1,2) }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) < Date(2015,1,1) }}"), "false")
     }
-    
+
     func testEarlierOrSame() {
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) <= Date(2018,1,2) }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) <= Date(2018,1,1) }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) <= Date(2015,1,1) }}"), "false")
     }
-    
+
     func testLater() {
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,4) > Date(2018,1,2) }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) > Date(2018,1,2) }}"), "false")
     }
-    
+
     func testLaterOrSame() {
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,4) >= Date(2018,1,2) }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ Date(2018,1,1) >= Date(2018,1,2) }}"), "false")
@@ -444,7 +444,7 @@ class TuxedoUnitTests: XCTestCase {
     func testLength() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'hello there'.length }}"), "11")
     }
-    
+
     func testCapitalise() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'hello there'.capitalise }}"), "Hello There")
     }

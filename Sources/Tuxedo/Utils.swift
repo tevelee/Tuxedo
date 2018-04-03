@@ -68,11 +68,11 @@ extension String {
 
     var html: String {
         var html = ""
-        for c in self {
-            if let entity = String.enc[c] {
+        for character in self {
+            if let entity = String.enc[character] {
                 html.append(entity)
             } else {
-                html.append(c)
+                html.append(character)
             }
         }
         return html

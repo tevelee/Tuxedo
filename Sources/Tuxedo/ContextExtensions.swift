@@ -1,7 +1,7 @@
 import Foundation
 
-typealias Macro = (arguments: [String], body: String)
-typealias BlockRenderer = (_ context: Context) -> String
+internal typealias Macro = (arguments: [String], body: String)
+internal typealias BlockRenderer = (_ context: Context) -> String
 
 extension Context {
     static let macrosKey: String = "__macros"
