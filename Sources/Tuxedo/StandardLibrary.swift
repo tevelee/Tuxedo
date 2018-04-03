@@ -41,7 +41,7 @@ public class StandardLibrary {
     public static func function<T>(_ name: String, body: @escaping ([Any]) -> T?) -> Function<T> {
         return Function([Keyword(name), OpenKeyword("("), Variable<String>("arguments", options: .notInterpreted), CloseKeyword(")")]) { variables, interpreter, _ in
             guard let arguments = variables["arguments"] as? String else { return nil }
-            let interpretedArguments = arguments.split(separator: ",").flatMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
+            let interpretedArguments = arguments.split(separator: ",").compactMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
             return body(interpretedArguments)
         }
     }
@@ -76,7 +76,7 @@ public class StandardLibrary {
             return value
         }, Keyword("("), Variable<String>("arguments", options: .notInterpreted), Keyword(")")]) { variables, interpreter, _ in
             guard let object = variables["lhs"] as? O, variables["rhs"] != nil, let arguments = variables["arguments"] as? String else { return nil }
-            let interpretedArguments = arguments.split(separator: ",").flatMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
+            let interpretedArguments = arguments.split(separator: ",").compactMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
             return body(object, interpretedArguments)
         }
     }

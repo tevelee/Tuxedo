@@ -47,7 +47,7 @@ public extension StandardLibrary {
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             let parsedValues : [(key: String, value: CustomStringConvertible?)] = values
                 .map { $0.split(separator: ":").map { interpreter.evaluate(String($0)) } }
-                .flatMap {
+                .compactMap {
                     guard let first = $0.first, let key = first as? String, let value = $0.last else { return nil }
                     return (key: key, value: value as? CustomStringConvertible)
                 }

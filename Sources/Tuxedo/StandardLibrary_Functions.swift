@@ -126,7 +126,7 @@ public extension StandardLibrary {
             guard let arguments = variables["arguments"] as? String,
                 let name = variables["name"] as? String,
                 let macro = interpreter.context.macros[name.trimmingCharacters(in: .whitespacesAndNewlines)] else { return nil }
-            let interpretedArguments = arguments.split(separator: ",").flatMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
+            let interpretedArguments = arguments.split(separator: ",").compactMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
             context.push()
             for (key, value) in zip(macro.arguments, interpretedArguments) {
                 context.variables[key] = value
@@ -486,7 +486,7 @@ public extension StandardLibrary {
                 let variable = variables["variable"] as? String,
                 let body = variables["body"] as? String else { return nil }
             context.push()
-            let result: [Any] = object.flatMap { item in
+            let result: [Any] = object.compactMap { item in
                 context.variables[variable] = item
                 return interpreter.evaluate(body, context: context)
             }

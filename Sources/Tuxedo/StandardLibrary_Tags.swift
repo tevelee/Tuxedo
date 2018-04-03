@@ -145,7 +145,7 @@ public extension StandardLibrary {
     static var importStatement: Pattern<String, TemplateInterpreter<String>> {
         return Pattern([OpenKeyword(tagPrefix + " import"), Variable<String>("file"), CloseKeyword(tagSuffix)]) { variables, interpreter, context in
             guard let file = variables["file"] as? String,
-                let url = Bundle.allBundles.flatMap({ $0.url(forResource: file, withExtension: nil) }).first,
+                let url = Bundle.allBundles.compactMap({ $0.url(forResource: file, withExtension: nil) }).first,
                 let expression = try? String(contentsOf: url) else { return nil }
             return interpreter.evaluate(expression, context: context)
         }

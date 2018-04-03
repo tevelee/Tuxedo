@@ -51,7 +51,7 @@ class Tuxedo {
     static func isSpecificJob() -> Bool {
         guard let jobsString = Shell.nextArg("--jobs") else { return false }
         let jobsToRun = jobsString.split(separator: ",").map { String($0) }
-        let jobsFound = jobsToRun.flatMap { job in jobs.first { $0.key == job } }
+        let jobsFound = jobsToRun.compactMap { job in jobs.first { $0.key == job } }
         runCommands("Executing jobs: \(jobsString)") {
             if let job = jobsToRun.first(where: { !self.jobs.keys.contains($0) }) {
                 throw CIError.logicalError(message: "Job not found: \(job)")
@@ -267,7 +267,7 @@ class Tuxedo {
         }
 
         let tests = Path("Tests/TuxedoTests")
-        let files = try tests.children().flatMap { $0.components.last }.filter { $0.hasSuffix("txt") }
+        let files = try tests.children().compactMap { $0.components.last }.filter { $0.hasSuffix("txt") }
         for file in files {
             let fileRef = PBXFileReference(sourceTree: .group, name: nil, path: file)
             fileRef.fileEncoding = 4 //utf8
