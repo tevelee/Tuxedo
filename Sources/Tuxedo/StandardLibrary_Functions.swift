@@ -376,7 +376,7 @@ public extension StandardLibrary {
             return value
         }, Keyword("("), Variable<Any>("fallback"), Keyword(")")], options: .backwardMatch) { variables, _, _ in
             guard let value = variables["lhs"], variables["rhs"] != nil else { return nil }
-            return isNilOrWrappedNil(value: value) ? variables["fallback"] : value
+            return isNilOrWrappedNil(value: value) ? variables["fallback"] as Any : value
         }
     }
 

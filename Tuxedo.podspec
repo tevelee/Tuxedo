@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Tuxedo"
-  s.version = "1.0.0"
+  s.version = "1.0.1"
   s.summary = "Tuxedo is a template language for Swift"
   s.description = <<-DESC
 Tuxedo is a template language for Swift. 
@@ -19,5 +19,5 @@ DESC
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
 
-  s.dependency "Eval", "~> 1.3.0"
+  s.dependency "Eval", "~> 1.3.1"
 end
