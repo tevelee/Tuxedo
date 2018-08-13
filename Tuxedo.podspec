@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "Tuxedo"
-  s.version = "1.0.1"
+  s.version = "1.0.2"
   s.summary = "Tuxedo is a template language for Swift"
   s.description = <<-DESC
 Tuxedo is a template language for Swift. 
