@@ -1,8 +1,8 @@
 # Tuxedo
 
 [![Travis CI status](https://travis-ci.org/tevelee/Tuxedo.svg?branch=master)](https://travis-ci.org/tevelee/Tuxedo)
-[![Framework version](https://img.shields.io/badge/Version-1.0.2-yellow.svg)]()
-[![Swift version](https://img.shields.io/badge/Swift-4.0-orange.svg)]()
+[![Framework version](https://img.shields.io/badge/Version-1.0.3-yellow.svg)]()
+[![Swift version](https://img.shields.io/badge/Swift-4.2-orange.svg)]()
 [![Code Test Coverage](https://codecov.io/gh/tevelee/Tuxedo/branch/master/graph/badge.svg)](https://codecov.io/gh/tevelee/Tuxedo)
 [![Platforms](https://img.shields.io/badge/Platforms-iOS%20|%20macOS%20|%20Linux-blue.svg)]()
 [![Lincese](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://github.com/tevelee/Tuxedo/tree/master/LICENSE.txt)
