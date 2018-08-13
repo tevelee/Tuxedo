@@ -604,13 +604,13 @@ public extension StandardLibrary {
 
     static var loopIsFirst: Function<Bool?> {
         return Function([Variable<Any>("value"), Keyword("is first")]) { _, _, context in
-            return context.variables["__first"] as? Bool
+            context.variables["__first"] as? Bool
         }
     }
 
     static var loopIsLast: Function<Bool?> {
         return Function([Variable<Any>("value"), Keyword("is last")]) { _, _, context in
-            return context.variables["__last"] as? Bool
+            context.variables["__last"] as? Bool
         }
     }
 
@@ -652,7 +652,7 @@ public extension StandardLibrary {
 
     static var dictionaryKeys: Function<[String]> {
         return objectFunction("keys") { (object: [String: Any?]) -> [String] in
-            return object.keys.sorted()
+            object.keys.sorted()
         }
     }
 

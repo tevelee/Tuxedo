@@ -32,7 +32,7 @@ public extension StandardLibrary {
 
     static var arrayType: DataType<[CustomStringConvertible]> {
         let arrayLiteral = literal(opening: "[", closing: "]") { input, interpreter -> [CustomStringConvertible]? in
-            return input
+            input
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                 .map { interpreter.evaluate(String($0)) as? CustomStringConvertible ?? String($0) }
