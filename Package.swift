@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.1
 
 import PackageDescription
 
@@ -10,7 +10,7 @@ let package = Package(
             targets: ["Tuxedo"])
     ],
     dependencies: [
-        .package(url: "https://github.com/tevelee/Eval", from: "1.3.1")
+        .package(url: "https://github.com/tevelee/Eval", from: "1.3.2")
     ],
     targets: [
         .target(
