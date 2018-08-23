@@ -14,6 +14,10 @@
                 var toggler = document.querySelector(togglerSelector);
                 var target = document.querySelector(targetSelector);
 
+                if (!toggler) {
+                  return;
+                }
+
                 toggler.onclick = function(event) {
                   event.preventDefault();
 
@@ -36,48 +40,48 @@
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="print"></a><a href="#print" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Print</code></h3>
 <p>Print tag is the most basic statement of all, all it does is it forumlates its body as a string expression.</p>
-<pre><code class="hljs css languages- swift">templateEngine.evaluate(<span class="hljs-string">"{{ 'This is a string' }}"</span>) <span class="hljs-comment">// This is a string</span>
+<pre><code class="hljs css language-swift">templateEngine.evaluate(<span class="hljs-string">"{{ 'This is a string' }}"</span>) <span class="hljs-comment">// This is a string</span>
 </code></pre>
 <p>Print statement is smart, it evaluates its body while using functions, variables, and data type instances.</p>
 <pre><code class="hljs"><span class="hljs-selector-tag">templateEngine</span><span class="hljs-selector-class">.evaluate</span>(<span class="hljs-string">"{{ 2 * round(value) }}"</span>, <span class="hljs-attribute">variables</span>: [<span class="hljs-string">"value"</span>: <span class="hljs-number">2.8</span>]) <span class="hljs-comment">// 6</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="if-and-if-else"></a><a href="#if-and-if-else" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>If</code> and <code>If-Else</code></h3>
 <p>It's easy to run conditional evaluation:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% if true %}Hello{% endif %} {{ name }}!"</span>, variables: [<span class="hljs-string">"name"</span>: <span class="hljs-string">"John"</span>]) <span class="hljs-comment">// Hello John!</span>
+<pre><code class="hljs css language-swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% if true %}Hello{% endif %} {{ name }}!"</span>, variables: [<span class="hljs-string">"name"</span>: <span class="hljs-string">"John"</span>]) <span class="hljs-comment">// Hello John!</span>
 </code></pre>
 <p>You can also use one with an <code>else</code> clause:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% if greeting %}Hello{% else %}Bye{% endif %} {{ name }}!"</span>, variables: [<span class="hljs-string">"greeting"</span>: <span class="hljs-literal">false</span>, <span class="hljs-string">"name"</span>: <span class="hljs-string">"John"</span>]) <span class="hljs-comment">// Bye John!</span>
+<pre><code class="hljs css language-swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% if greeting %}Hello{% else %}Bye{% endif %} {{ name }}!"</span>, variables: [<span class="hljs-string">"greeting"</span>: <span class="hljs-literal">false</span>, <span class="hljs-string">"name"</span>: <span class="hljs-string">"John"</span>]) <span class="hljs-comment">// Bye John!</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="for"></a><a href="#for" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>For</code></h3>
 <p>For loop iterates over an array and creates a local variable with every value in the collection:</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% for i in [1,2,3] %}{{i * 2}}{% if i is not last %}, {% endif %}{% endfor %}"</span>) <span class="hljs-comment">// 2, 4, 6</span>
+<pre><code class="hljs css language-swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% for i in [1,2,3] %}{{i * 2}}{% if i is not last %}, {% endif %}{% endfor %}"</span>) <span class="hljs-comment">// 2, 4, 6</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="comment"></a><a href="#comment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Comment</code></h3>
 <p>Comment statement removes its body and replaces it with an empty string, therefore makes its content disappear, as a commented block in regaular programming languages.</p>
-<pre><code class="hljs css languages- swift">templateEngine.evaluate(<span class="hljs-string">"Hello {# commented block #}World!"</span>) <span class="hljs-comment">// Hello World!</span>
+<pre><code class="hljs css language-swift">templateEngine.evaluate(<span class="hljs-string">"Hello {# commented block #}World!"</span>) <span class="hljs-comment">// Hello World!</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="set"></a><a href="#set" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Set</code></h3>
 <p>Set creates named variables and assignes values to them.</p>
 <p>It can be expressed in two distinct ways:</p>
-<pre><code class="hljs css languages- swift">template.evaluate(<span class="hljs-string">"{% set x = 4.0 %}"</span>)
+<pre><code class="hljs css language-swift">template.evaluate(<span class="hljs-string">"{% set x = 4.0 %}"</span>)
 template.evaluate(<span class="hljs-string">"{% set x %}this{% endset %}"</span>)
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="macro"></a><a href="#macro" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Macro</code></h3>
 <p>There's also an option to create custom macros (define basic functions):</p>
-<pre><code class="hljs css languages- swift">template.evaluate(<span class="hljs-string">"{% macro duplicate(value) %}value * 2{% endmacro %}{{ duplicate(4) }}"</span>) <span class="hljs-comment">// 8</span>
+<pre><code class="hljs css language-swift">template.evaluate(<span class="hljs-string">"{% macro duplicate(value) %}value * 2{% endmacro %}{{ duplicate(4) }}"</span>) <span class="hljs-comment">// 8</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="block"></a><a href="#block" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Block</code></h3>
 <p>You can define blocks which print the body of them.</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"Title: {% block title %}Original{% endblock %}"</span>) <span class="hljs-comment">// Title: Original</span>
+<pre><code class="hljs css language-swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"Title: {% block title %}Original{% endblock %}"</span>) <span class="hljs-comment">// Title: Original</span>
 </code></pre>
 <p>Blocks allows them to override their contents later</p>
-<pre><code class="hljs css languages- swift">{% block title %}<span class="hljs-type">Other</span>{% endblock %} <span class="hljs-comment">// Title: Other</span>
+<pre><code class="hljs css language-swift">{% block title %}<span class="hljs-type">Other</span>{% endblock %} <span class="hljs-comment">// Title: Other</span>
 </code></pre>
 <p>If you need the previous value, you can access it throug the <code>parent</code> method:</p>
-<pre><code class="hljs css languages- swift">{% block title %}{{ parent() }} + <span class="hljs-type">New</span>{% endblock %} <span class="hljs-comment">// Title: Original + New</span>
+<pre><code class="hljs css language-swift">{% block title %}{{ parent() }} + <span class="hljs-type">New</span>{% endblock %} <span class="hljs-comment">// Title: Original + New</span>
 </code></pre>
 <p>Or override the parent if it contains any variables:</p>
-<pre><code class="hljs css languages- swift">Tuxedo().evaluate("""
+<pre><code class="hljs css language-swift">Tuxedo().evaluate("""
 
 {% block title %}Hello {{name}}{% endblock %}
 {% block title %}{{ parent(name='John') }}!{% endblock %}
@@ -86,14 +90,14 @@ template.evaluate(<span class="hljs-string">"{% set x %}this{% endset %}"</span>
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="import"></a><a href="#import" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Import</code></h3>
 <p>If using template files, it's easy to import one using the import statement:</p>
-<pre><code class="hljs css languages- swift">{% <span class="hljs-keyword">import</span> 'template.txt' %}
+<pre><code class="hljs css language-swift">{% <span class="hljs-keyword">import</span> 'template.txt' %}
 </code></pre>
 <p>It uses a file url path pattern, so <code>subfolder/template.txt</code> works when accessing files in a different folder.</p>
 <h3><a class="anchor" aria-hidden="true" id="spaceless"></a><a href="#spaceless" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Spaceless</code></h3>
 <p>You can wrap your code around <code>spaceless</code> tags to remove every whitespace in the body.</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% spaceless %}   {% if true %}    Hello    {% endif %}    {% endspaceless %}"</span>) <span class="hljs-comment">// Hello</span>
+<pre><code class="hljs css language-swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"{% spaceless %}   {% if true %}    Hello    {% endif %}    {% endspaceless %}"</span>) <span class="hljs-comment">// Hello</span>
 </code></pre>
 <p>Or, if you only need to eliminate whitespaces on one side, you can use the special <code>{-}</code> notation. If placed anywhere, it removes itself and the whitespaces around it.</p>
-<pre><code class="hljs css languages- swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"asd   {% if true %}   Hello {-}  {% endif %}   "</span>)
+<pre><code class="hljs css language-swift"><span class="hljs-type">Tuxedo</span>().evaluate(<span class="hljs-string">"asd   {% if true %}   Hello {-}  {% endif %}   "</span>)
 </code></pre>
 </span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/Tuxedo/docs/object_functions.html">← Object functions</a></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/Tuxedo/" class="nav-home"><img src="/Tuxedo/img/tuxedo.svg" alt="Tuxedo" width="66" height="58"/></a><div><h5>Docs</h5><a href="/Tuxedo/docs/en/doc1.html">Getting Started (or other categories)</a><a href="/Tuxedo/docs/en/doc2.html">Guides (or other categories)</a><a href="/Tuxedo/docs/en/doc3.html">API Reference (or other categories)</a></div><div><h5>Community</h5><a href="http://stackoverflow.com/questions/tagged/" target="_blank">Stack Overflow</a><a href="https://discordapp.com/">Project Chat</a><a href="https://twitter.com/" target="_blank">Twitter</a></div><div><h5>More</h5><a href="/Tuxedo/blog">Blog</a><a href="https://github.com/tevelee/Tuxedo">Tuxedo on GitHub</a><a class="github-button" href="https://github.com/tevelee/Tuxedo" data-icon="octicon-star" data-count-href="/tevelee/Tuxedo/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a><a href="https://github.com/tevelee/Eval">Eval on GitHub</a><a class="github-button" href="https://github.com/tevelee/Eval" data-icon="octicon-star" data-count-href="/tevelee/Eval/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2018 Laszlo Teveli</section></footer></div><script>window.twttr=(function(d,s, id){var js,fjs=d.getElementsByTagName(s)[0],t=window.twttr||{};if(d.getElementById(id))return t;js=d.createElement(s);js.id=id;js.src='https://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js, fjs);t._e = [];t.ready = function(f) {t._e.push(f);};return t;}(document, 'script', 'twitter-wjs'));</script></body></html>

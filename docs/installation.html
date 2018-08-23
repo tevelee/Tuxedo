@@ -14,6 +14,10 @@
                 var toggler = document.querySelector(togglerSelector);
                 var target = document.querySelector(targetSelector);
 
+                if (!toggler) {
+                  return;
+                }
+
                 toggler.onclick = function(event) {
                   event.preventDefault();
 
@@ -31,29 +35,29 @@
 <hr>
 <h3><a class="anchor" aria-hidden="true" id="using-swift-package-manager"></a><a href="#using-swift-package-manager" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Using Swift Package Manager</code></h3>
 <p>Just add the following line to your dependencies in the <code>Package.swift</code> file:</p>
-<pre><code class="hljs css languages- swift">.package(url: <span class="hljs-string">"https://github.com/tevelee/Tuxedo.git"</span>, from: <span class="hljs-string">"1.0.0"</span>),
+<pre><code class="hljs css language-swift">.package(url: <span class="hljs-string">"https://github.com/tevelee/Tuxedo.git"</span>, from: <span class="hljs-string">"1.0.0"</span>),
 </code></pre>
 <p>And reference it by name in your targets:</p>
-<pre><code class="hljs css languages- swift">targets: [
+<pre><code class="hljs css language-swift">targets: [
     .target(name: <span class="hljs-string">"MyAwesomeApp"</span>, dependencies: [<span class="hljs-string">"Tuxedo"</span>]),
 ]
 </code></pre>
 <p>And finally, run the integration command:</p>
-<pre><code class="hljs css languages- bash">swift package resolve
+<pre><code class="hljs css language-bash">swift package resolve
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="using-cocoapos"></a><a href="#using-cocoapos" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Using CocoaPos</code></h3>
 <p>Just add the following line to your <code>Podfile</code>:</p>
-<pre><code class="hljs css languages- ruby">pod <span class="hljs-string">'Tuxedo'</span>, <span class="hljs-string">'~&gt; 1.0.0'</span>
+<pre><code class="hljs css language-ruby">pod <span class="hljs-string">'Tuxedo'</span>, <span class="hljs-string">'~&gt; 1.0.0'</span>
 </code></pre>
 <p>And install the new dependency:</p>
-<pre><code class="hljs css languages- bash">pod install
+<pre><code class="hljs css language-bash">pod install
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="using-carthage"></a><a href="#using-carthage" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Using Carthage</code></h3>
 <p>Just add the following line to your <code>Cartfile</code>:</p>
-<pre><code class="hljs css languages- ruby">github <span class="hljs-string">"tevelee/Tuxedo"</span> &gt;= <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>
+<pre><code class="hljs css language-ruby">github <span class="hljs-string">"tevelee/Tuxedo"</span> &gt;= <span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>
 </code></pre>
 <p>And install the new dependency:</p>
-<pre><code class="hljs css languages- bash">carthage update
+<pre><code class="hljs css language-bash">carthage update
 </code></pre>
 <h3><a class="anchor" aria-hidden="true" id="manually"></a><a href="#manually" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><code>Manually</code></h3>
 <p>(Not recommended! Please use a package manager instead to keep your dependencies up to date.)</p>
