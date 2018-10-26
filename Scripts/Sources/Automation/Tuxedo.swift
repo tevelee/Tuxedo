@@ -141,7 +141,7 @@ class Tuxedo {
 
     static func generateDocs() throws {
         print("📚 Generating documentation")
-        try Shell.executeAndPrint("pushd website && npm build && popd", timeout: 120)
+        try Shell.executeAndPrint("pushd website && npm run build && popd", timeout: 120)
     }
 
     static func publishDocs() throws {
@@ -157,7 +157,7 @@ class Tuxedo {
             try Shell.executeAndPrint("rm -rf website/build")
         }
 
-        try Shell.executeAndPrint("pushd website && npm run publish-gh-pages && popd", timeout: 60)
+        try Shell.executeAndPrint("pushd website && npm run publish-gh-pages || true && popd", timeout: 60)
     }
 
     static func runCocoaPodsLinter() throws {
