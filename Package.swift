@@ -10,7 +10,7 @@ let package = Package(
             targets: ["Tuxedo"])
     ],
     dependencies: [
-        .package(url: "https://github.com/tevelee/Eval", from: "1.3.3")
+        .package(url: "https://github.com/tevelee/Eval", from: "1.4.0")
     ],
     targets: [
         .target(

@@ -19,8 +19,8 @@ public class Tuxedo {
         let language = StringTemplateInterpreter(statements: tags, interpreter: interpreter, context: context)
         self.language = language
 
-        let block = Pattern<String, TemplateInterpreter<String>>([OpenKeyword("{{{"), TemplateVariable("name", options: .notInterpreted), CloseKeyword("}}}")]) { variables, _, _ in
-            guard let name = variables["name"] as? String else { return nil }
+        let block = Pattern<String, TemplateInterpreter<String>>([OpenKeyword("{{{"), TemplateVariable("name", options: .notInterpreted), CloseKeyword("}}}")]) {
+            guard let name = $0.variables["name"] as? String else { return nil }
             return language.context.blocks[name]?.last?(language.context)
         }
         macroReplacer = StringTemplateInterpreter(statements: [block])

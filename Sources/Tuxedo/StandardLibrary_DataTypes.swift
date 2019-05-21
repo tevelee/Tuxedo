@@ -14,20 +14,20 @@ public extension StandardLibrary {
     }
 
     static var numericType: DataType<Double> {
-        let numberLiteral = Literal { value, _ in Double(value) }
+        let numberLiteral = Literal { Double($0.value) }
         let piLiteral = Literal("pi", convertsTo: Double.pi)
-        return DataType(type: Double.self, literals: [numberLiteral, piLiteral]) { value, _ in String(format: "%g", value) }
+        return DataType(type: Double.self, literals: [numberLiteral, piLiteral]) { String(format: "%g", $0.value) }
     }
 
     static var stringType: DataType<String> {
         let singleQuotesLiteral = literal(opening: "'", closing: "'") { input, _ in input }
-        return DataType(type: String.self, literals: [singleQuotesLiteral]) { value, _ in value }
+        return DataType(type: String.self, literals: [singleQuotesLiteral]) { $0.value }
     }
 
     static var dateType: DataType<Date> {
         let dateFormatter = DateFormatter(with: "yyyy-MM-dd HH:mm:ss")
         let now = Literal<Date>("now", convertsTo: Date())
-        return DataType(type: Date.self, literals: [now]) { value, _ in dateFormatter.string(from: value) }
+        return DataType(type: Date.self, literals: [now]) { dateFormatter.string(from: $0.value) }
     }
 
     static var arrayType: DataType<[CustomStringConvertible]> {
@@ -37,7 +37,7 @@ public extension StandardLibrary {
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                 .map { interpreter.evaluate(String($0)) as? CustomStringConvertible ?? String($0) }
         }
-        return DataType(type: [CustomStringConvertible].self, literals: [arrayLiteral]) { value, printer in value.map { printer.print($0) }.joined(separator: ",") }
+        return DataType(type: [CustomStringConvertible].self, literals: [arrayLiteral]) { dataType in dataType.value.map { dataType.printer.print($0) }.joined(separator: ",") }
     }
 
     static var dictionaryType: DataType<[String: CustomStringConvertible?]> {
@@ -53,12 +53,12 @@ public extension StandardLibrary {
                 }
             return Dictionary(grouping: parsedValues) { $0.key }.mapValues { $0.first?.value }
         }
-        return DataType(type: [String: CustomStringConvertible?].self, literals: [dictionaryLiteral]) { value, printer in
-            let items = value.map { key, value in
+        return DataType(type: [String: CustomStringConvertible?].self, literals: [dictionaryLiteral]) { dataType in
+            let items = dataType.value.map { key, value in
                 if let value = value {
-                    return "\(printer.print(key)): \(printer.print(value))"
+                    return "\(dataType.printer.print(key)): \(dataType.printer.print(value))"
                 } else {
-                    return "\(printer.print(key)): nil"
+                    return "\(dataType.printer.print(key)): nil"
                 }
             }.sorted().joined(separator: ", ")
             return "[\(items)]"
@@ -68,12 +68,12 @@ public extension StandardLibrary {
     static var booleanType: DataType<Bool> {
         let trueLiteral = Literal("true", convertsTo: true)
         let falseLiteral = Literal("false", convertsTo: false)
-        return DataType(type: Bool.self, literals: [trueLiteral, falseLiteral]) { value, _ in value ? "true" : "false" }
+        return DataType(type: Bool.self, literals: [trueLiteral, falseLiteral]) { $0.value ? "true" : "false" }
     }
 
     static var emptyType: DataType<Any?> {
         let nullLiteral = Literal<Any?>("null", convertsTo: nil)
         let nilLiteral = Literal<Any?>("nil", convertsTo: nil)
-        return DataType(type: Any?.self, literals: [nullLiteral, nilLiteral]) { _, _ in "null" }
+        return DataType(type: Any?.self, literals: [nullLiteral, nilLiteral]) { _ in "null" }
     }
 }

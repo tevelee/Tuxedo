@@ -115,51 +115,51 @@ public extension StandardLibrary {
     }
 
     static var parentheses: Function<Any> {
-        return Function([OpenKeyword("("), Variable<Any>("body"), CloseKeyword(")")]) { arguments, _, _ in arguments["body"] }
+        return Function([OpenKeyword("("), Variable<Any>("body"), CloseKeyword(")")]) { $0.variables["body"] }
     }
 
     static var macro: Function<Any> {
-        return Function([Variable<String>("name", options: .notInterpreted) { value, interpreter in
-            guard let value = value as? String else { return nil }
-            return interpreter.context.macros.keys.contains(value) ? value : nil
-        }, OpenKeyword("("), Variable<String>("arguments", options: .notInterpreted), CloseKeyword(")")]) { variables, interpreter, context in
-            guard let arguments = variables["arguments"] as? String,
-                let name = variables["name"] as? String,
-                let macro = interpreter.context.macros[name.trimmingCharacters(in: .whitespacesAndNewlines)] else { return nil }
-            let interpretedArguments = arguments.split(separator: ",").compactMap { interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
-            context.push()
+        return Function([Variable<String>("name", options: .notInterpreted) {
+            guard let value = $0.value as? String else { return nil }
+            return $0.interpreter.context.macros.keys.contains(value) ? value : nil
+        }, OpenKeyword("("), Variable<String>("arguments", options: .notInterpreted), CloseKeyword(")")]) { fun in
+            guard let arguments = fun.variables["arguments"] as? String,
+                let name = fun.variables["name"] as? String,
+                let macro = fun.interpreter.context.macros[name.trimmingCharacters(in: .whitespacesAndNewlines)] else { return nil }
+            let interpretedArguments = arguments.split(separator: ",").compactMap { fun.interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
+            fun.context.push()
             for (key, value) in zip(macro.arguments, interpretedArguments) {
-                context.variables[key] = value
+                fun.context.variables[key] = value
             }
-            let result = interpreter.evaluate(macro.body, context: context)
-            context.pop()
+            let result = fun.interpreter.evaluate(macro.body, context: fun.context)
+            fun.context.pop()
             return result
         }
     }
 
     static var blockParent: Function<Any> {
-        return Function([Keyword("parent"), OpenKeyword("("), Variable<String>("arguments", options: .notInterpreted), CloseKeyword(")")]) { variables, interpreter, context in
-            guard let arguments = variables["arguments"] as? String else { return nil }
+        return Function([Keyword("parent"), OpenKeyword("("), Variable<String>("arguments", options: .notInterpreted), CloseKeyword(")")]) { fun in
+            guard let arguments = fun.variables["arguments"] as? String else { return nil }
             var interpretedArguments: [String: Any] = [:]
             for argument in arguments.split(separator: ",") {
                 let parts = String(argument).trimmingCharacters(in: .whitespacesAndNewlines).split(separator: "=")
                 if let key = parts.first, let value = parts.last {
-                    interpretedArguments[String(key)] = interpreter.evaluate(String(value))
+                    interpretedArguments[String(key)] = fun.interpreter.evaluate(String(value))
                 }
             }
-            guard let name = context.variables["__block"] as? String, let block = context.blocks[name]?.last else { return nil }
-            context.push()
-            context.variables.merge(interpretedArguments) { _, new in new }
-            let result = block(context)
-            context.pop()
+            guard let name = fun.context.variables["__block"] as? String, let block = fun.context.blocks[name]?.last else { return nil }
+            fun.context.push()
+            fun.context.variables.merge(interpretedArguments) { _, new in new }
+            let result = block(fun.context)
+            fun.context.pop()
             return result
         }
     }
 
     static var ternaryOperator: Function<Any> {
-        return Function([Variable<Bool>("condition"), Keyword("?"), Variable<Any>("body"), Keyword(": "), Variable<Any>("else")]) { arguments, _, _ in
-            guard let condition = arguments["condition"] as? Bool else { return nil }
-            return condition ? arguments["body"] : arguments["else"]
+        return Function([Variable<Bool>("condition"), Keyword("?"), Variable<Any>("body"), Keyword(": "), Variable<Any>("else")]) {
+            guard let condition = $0.variables["condition"] as? Bool else { return nil }
+            return condition ? $0.variables["body"] : $0.variables["else"]
         }
     }
 
@@ -371,12 +371,12 @@ public extension StandardLibrary {
     }
 
     static var defaultValue: Function<Any> {
-        return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) { value, _ in
-            guard let value = value as? String, value == "default" else { return nil }
+        return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
+            guard let value = $0.value as? String, value == "default" else { return nil }
             return value
-        }, Keyword("("), Variable<Any>("fallback"), Keyword(")")], options: .backwardMatch) { variables, _, _ in
-            guard let value = variables["lhs"], variables["rhs"] != nil else { return nil }
-            return isNilOrWrappedNil(value: value) ? variables["fallback"] as Any : value
+        }, Keyword("("), Variable<Any>("fallback"), Keyword(")")], options: .backwardMatch) {
+            guard let value = $0.variables["lhs"], $0.variables["rhs"] != nil else { return nil }
+            return isNilOrWrappedNil(value: value) ? $0.variables["fallback"] as Any : value
         }
     }
 
@@ -442,21 +442,21 @@ public extension StandardLibrary {
     }
 
     static var arraySplitFunction: Function<[String]> {
-        return Function([Variable<String>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) { value, _ in
-            guard let value = value as? String, value == "split" else { return nil }
+        return Function([Variable<String>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
+            guard let value = $0.value as? String, value == "split" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("separator"), Keyword(")")]) { variables, _, _ in
-            guard let object = variables["lhs"] as? String, variables["rhs"] != nil, let separator = variables["separator"] as? String else { return nil }
+        }, Keyword("("), Variable<String>("separator"), Keyword(")")]) {
+            guard let object = $0.variables["lhs"] as? String, $0.variables["rhs"] != nil, let separator = $0.variables["separator"] as? String else { return nil }
             return object.split(separator: Character(separator)).map { String($0) }
         }
     }
 
     static var arrayMergeFunction: Function<[Any]> {
-        return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) { value, _ in
-            guard let value = value as? String, value == "merge" else { return nil }
+        return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
+            guard let value = $0.value as? String, value == "merge" else { return nil }
             return value
-        }, Keyword("("), Variable<[Any]>("other"), Keyword(")")]) { variables, _, _ in
-            guard let object = variables["lhs"] as? [Any], variables["rhs"] != nil, let other = variables["other"] as? [Any] else { return nil }
+        }, Keyword("("), Variable<[Any]>("other"), Keyword(")")]) {
+            guard let object = $0.variables["lhs"] as? [Any], $0.variables["rhs"] != nil, let other = $0.variables["other"] as? [Any] else { return nil }
             return object + other
         }
     }
@@ -478,63 +478,63 @@ public extension StandardLibrary {
     }
 
     static var arrayMapFunction: Function<[Any]> {
-        return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) { value, _ in
-            guard let value = value as? String, value == "map" else { return nil }
+        return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
+            guard let value = $0.value as? String, value == "map" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { variables, interpreter, context in
-            guard let object = variables["lhs"] as? [Any], variables["rhs"] != nil,
-                let variable = variables["variable"] as? String,
-                let body = variables["body"] as? String else { return nil }
-            context.push()
+        }, Keyword("("), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { fun in
+            guard let object = fun.variables["lhs"] as? [Any], fun.variables["rhs"] != nil,
+                let variable = fun.variables["variable"] as? String,
+                let body = fun.variables["body"] as? String else { return nil }
+            fun.context.push()
             let result: [Any] = object.compactMap { item in
-                context.variables[variable] = item
-                return interpreter.evaluate(body, context: context)
+                fun.context.variables[variable] = item
+                return fun.interpreter.evaluate(body, context: fun.context)
             }
-            context.pop()
+            fun.context.pop()
             return result
         }
     }
 
     static var arrayFilterFunction: Function<[Any]> {
-        return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) { value, _ in
-            guard let value = value as? String, value == "filter" else { return nil }
+        return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
+            guard let value = $0.value as? String, value == "filter" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { variables, interpreter, context in
-            guard let object = variables["lhs"] as? [Any], variables["rhs"] != nil,
-                let variable = variables["variable"] as? String,
-                let body = variables["body"] as? String else { return nil }
-            context.push()
+        }, Keyword("("), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { fun in
+            guard let object = fun.variables["lhs"] as? [Any], fun.variables["rhs"] != nil,
+                let variable = fun.variables["variable"] as? String,
+                let body = fun.variables["body"] as? String else { return nil }
+            fun.context.push()
             let result: [Any] = object.filter { item in
-                context.variables[variable] = item
-                if let result = interpreter.evaluate(body, context: context) as? Bool {
+                fun.context.variables[variable] = item
+                if let result = fun.interpreter.evaluate(body, context: fun.context) as? Bool {
                     return result
                 }
                 return false
             }
-            context.pop()
+            fun.context.pop()
             return result
         }
     }
 
     static var dictionaryFilterFunction: Function<[String: Any]> {
-        return Function([Variable<[String: Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) { value, _ in
-            guard let value = value as? String, value == "filter" else { return nil }
+        return Function([Variable<[String: Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
+            guard let value = $0.value as? String, value == "filter" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("key", options: .notInterpreted), Keyword(","), Variable<String>("value", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { variables, interpreter, context in
-            guard let object = variables["lhs"] as? [String: Any], variables["rhs"] != nil,
-                let keyVariable = variables["key"] as? String,
-                let valueVariable = variables["value"] as? String,
-                let body = variables["body"] as? String else { return nil }
-            context.push()
+        }, Keyword("("), Variable<String>("key", options: .notInterpreted), Keyword(","), Variable<String>("value", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { fun in
+            guard let object = fun.variables["lhs"] as? [String: Any], fun.variables["rhs"] != nil,
+                let keyVariable = fun.variables["key"] as? String,
+                let valueVariable = fun.variables["value"] as? String,
+                let body = fun.variables["body"] as? String else { return nil }
+            fun.context.push()
             let result: [String: Any] = object.filter { key, value in
-                context.variables[keyVariable] = key
-                context.variables[valueVariable] = value
-                if let result = interpreter.evaluate(body, context: context) as? Bool {
+                fun.context.variables[keyVariable] = key
+                fun.context.variables[valueVariable] = value
+                if let result = fun.interpreter.evaluate(body, context: fun.context) as? Bool {
                     return result
                 }
                 return false
             }
-            context.pop()
+            fun.context.pop()
             return result
         }
     }
@@ -603,27 +603,23 @@ public extension StandardLibrary {
     }
 
     static var loopIsFirst: Function<Bool?> {
-        return Function([Variable<Any>("value"), Keyword("is first")]) { _, _, context in
-            context.variables["__first"] as? Bool
-        }
+        return Function([Variable<Any>("value"), Keyword("is first")]) { $0.context.variables["__first"] as? Bool }
     }
 
     static var loopIsLast: Function<Bool?> {
-        return Function([Variable<Any>("value"), Keyword("is last")]) { _, _, context in
-            context.variables["__last"] as? Bool
-        }
+        return Function([Variable<Any>("value"), Keyword("is last")]) { $0.context.variables["__last"] as? Bool }
     }
 
     static var loopIsNotFirst: Function<Bool?> {
-        return Function([Variable<Any>("value"), Keyword("is not first")]) { _, _, context in
-            guard let isFirst = context.variables["__first"] as? Bool else { return nil }
+        return Function([Variable<Any>("value"), Keyword("is not first")]) {
+            guard let isFirst = $0.context.variables["__first"] as? Bool else { return nil }
             return !isFirst
         }
     }
 
     static var loopIsNotLast: Function<Bool?> {
-        return Function([Variable<Any>("value"), Keyword("is not last")]) { _, _, context in
-            guard let isLast = context.variables["__last"] as? Bool else { return nil }
+        return Function([Variable<Any>("value"), Keyword("is not last")]) {
+            guard let isLast = $0.context.variables["__last"] as? Bool else { return nil }
             return !isLast
         }
     }
@@ -637,15 +633,15 @@ public extension StandardLibrary {
     }
 
     static var arraySubscript: Function<Any?> {
-        return Function([Variable<[Any]>("array"), Keyword("."), Variable<Double>("index")]) { variables, _, _ in
-            guard let array = variables["array"] as? [Any], let index = variables["index"] as? Double, index > 0, Int(index) < array.count else { return nil }
+        return Function([Variable<[Any]>("array"), Keyword("."), Variable<Double>("index")]) {
+            guard let array = $0.variables["array"] as? [Any], let index = $0.variables["index"] as? Double, index > 0, Int(index) < array.count else { return nil }
             return array[Int(index)]
         }
     }
 
     static var dictionarySubscript: Function<Any?> {
-        return Function([Variable<[String: Any]>("dictionary"), Keyword("."), Variable<String>("key", options: .notInterpreted)]) { variables, _, _ in
-            guard let dictionary = variables["dictionary"] as? [String: Any], let key = variables["key"] as? String else { return nil }
+        return Function([Variable<[String: Any]>("dictionary"), Keyword("."), Variable<String>("key", options: .notInterpreted)]) {
+            guard let dictionary = $0.variables["dictionary"] as? [String: Any], let key = $0.variables["key"] as? String else { return nil }
             return dictionary[key]
         }
     }
@@ -669,9 +665,9 @@ public extension StandardLibrary {
     }
 
     static var methodCallWithIntResult: Function<Double> {
-        return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted)]) { arguments, _, _ -> Double? in
-            if let lhs = arguments["lhs"] as? NSObjectProtocol,
-                let rhs = arguments["rhs"] as? String,
+        return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted)]) {
+            if let lhs = $0.variables["lhs"] as? NSObjectProtocol,
+                let rhs = $0.variables["rhs"] as? String,
                 let result = lhs.perform(Selector(rhs)) {
                 return Double(Int(bitPattern: result.toOpaque()))
             }
