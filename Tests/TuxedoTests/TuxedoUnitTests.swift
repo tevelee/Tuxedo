@@ -387,15 +387,15 @@ class TuxedoUnitTests: XCTestCase {
     }
 
     func testArrayMap() {
-        XCTAssertEqual(Tuxedo().evaluate("{{ [1,2,3].map(i => i * 2) }}"), "2,4,6")
+        XCTAssertEqual(Tuxedo().evaluate("{{ [1,2,3].map { i => i * 2 } }}"), "2,4,6")
     }
 
     func testArrayFilter() {
-        XCTAssertEqual(Tuxedo().evaluate("{{ [1,2,3].filter(i => i % 2 == 1) }}"), "1,3")
+        XCTAssertEqual(Tuxedo().evaluate("{{ [1,2,3].filter { i => i % 2 == 1 } }}"), "1,3")
     }
 
     func testDictionaryFilter() {
-        XCTAssertEqual(Tuxedo().evaluate("{{ {'a': 1, 'b': 2}.filter(k,v => k == 'a') }}"), "[a: 1]")
+        XCTAssertEqual(Tuxedo().evaluate("{{ {'a': 1, 'b': 2}.filter { k,v => k == 'a' } }}"), "[a: 1]")
     }
 
     func testDictionarySubscript() {

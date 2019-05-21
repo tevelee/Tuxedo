@@ -19,5 +19,5 @@ DESC
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
 
-  s.dependency "Eval", "~> 1.3.1"
+  s.dependency "Eval", "~> 1.5.0"
 end

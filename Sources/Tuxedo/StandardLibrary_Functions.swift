@@ -374,7 +374,7 @@ public extension StandardLibrary {
         return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == "default" else { return nil }
             return value
-        }, Keyword("("), Variable<Any>("fallback"), Keyword(")")], options: .backwardMatch) {
+        }, OpenKeyword("("), Variable<Any>("fallback"), CloseKeyword(")")], options: .backwardMatch) {
             guard let value = $0.variables["lhs"], $0.variables["rhs"] != nil else { return nil }
             return isNilOrWrappedNil(value: value) ? $0.variables["fallback"] as Any : value
         }
@@ -445,7 +445,7 @@ public extension StandardLibrary {
         return Function([Variable<String>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == "split" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("separator"), Keyword(")")]) {
+        }, OpenKeyword("("), Variable<String>("separator"), CloseKeyword(")")]) {
             guard let object = $0.variables["lhs"] as? String, $0.variables["rhs"] != nil, let separator = $0.variables["separator"] as? String else { return nil }
             return object.split(separator: Character(separator)).map { String($0) }
         }
@@ -455,7 +455,7 @@ public extension StandardLibrary {
         return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == "merge" else { return nil }
             return value
-        }, Keyword("("), Variable<[Any]>("other"), Keyword(")")]) {
+        }, OpenKeyword("("), Variable<[Any]>("other"), CloseKeyword(")")]) {
             guard let object = $0.variables["lhs"] as? [Any], $0.variables["rhs"] != nil, let other = $0.variables["other"] as? [Any] else { return nil }
             return object + other
         }
@@ -481,7 +481,7 @@ public extension StandardLibrary {
         return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == "map" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { fun in
+        }, Keyword("{"), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword("}")]) { fun in
             guard let object = fun.variables["lhs"] as? [Any], fun.variables["rhs"] != nil,
                 let variable = fun.variables["variable"] as? String,
                 let body = fun.variables["body"] as? String else { return nil }
@@ -499,7 +499,7 @@ public extension StandardLibrary {
         return Function([Variable<[Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == "filter" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { fun in
+        }, Keyword("{"), Variable<String>("variable", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword("}")]) { fun in
             guard let object = fun.variables["lhs"] as? [Any], fun.variables["rhs"] != nil,
                 let variable = fun.variables["variable"] as? String,
                 let body = fun.variables["body"] as? String else { return nil }
@@ -520,7 +520,7 @@ public extension StandardLibrary {
         return Function([Variable<[String: Any]>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == "filter" else { return nil }
             return value
-        }, Keyword("("), Variable<String>("key", options: .notInterpreted), Keyword(","), Variable<String>("value", options: .notInterpreted), Keyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword(")")]) { fun in
+        }, Keyword("{"), Variable<String>("key", options: .notInterpreted), Keyword(","), Variable<String>("value", options: .notInterpreted), CloseKeyword("=>"), Variable<Any>("body", options: .notInterpreted), Keyword("}")]) { fun in
             guard let object = fun.variables["lhs"] as? [String: Any], fun.variables["rhs"] != nil,
                 let keyVariable = fun.variables["key"] as? String,
                 let valueVariable = fun.variables["value"] as? String,

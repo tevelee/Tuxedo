@@ -75,7 +75,7 @@ public class StandardLibrary {
         return Function([Variable<O>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted) {
             guard let value = $0.value as? String, value == name else { return nil }
             return value
-        }, Keyword("("), Variable<String>("arguments", options: .notInterpreted), Keyword(")")]) { fun in
+        }, OpenKeyword("("), Variable<String>("arguments", options: .notInterpreted), CloseKeyword(")")]) { fun in
             guard let object = fun.variables["lhs"] as? O, fun.variables["rhs"] != nil, let arguments = fun.variables["arguments"] as? String else { return nil }
             let interpretedArguments = arguments.split(separator: ",").compactMap { fun.interpreter.evaluate(String($0).trimmingCharacters(in: .whitespacesAndNewlines)) }
             return body(object, interpretedArguments)
