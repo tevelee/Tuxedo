@@ -23,6 +23,8 @@
 /* Begin PBXBuildFile section */
 		3A0B800D2294413F008925A6 /* import.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* import.txt */; };
 		3A0B800E2294413F008925A6 /* template.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* template.txt */; };
+		3A0B8015229479E4008925A6 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B8014229479E4008925A6 /* Generator.swift */; };
+		3A4551B322954BF700FAB21D /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0B8014229479E4008925A6 /* Generator.swift */; };
 		OBJ_102 /* TuxedoComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_20 /* TuxedoComponentTests.swift */; };
 		OBJ_103 /* TuxedoUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* TuxedoUnitTests.swift */; };
 		OBJ_105 /* Tuxedo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "Tuxedo::Tuxedo::Product" /* Tuxedo.framework */; };
@@ -93,6 +95,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3A0B8014229479E4008925A6 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		"Eval::Eval::Product" /* Eval.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Eval.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		OBJ_10 /* StandardLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardLibrary.swift; sourceTree = "<group>"; };
 		OBJ_11 /* StandardLibrary_DataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardLibrary_DataTypes.swift; sourceTree = "<group>"; };
@@ -230,7 +233,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -251,7 +254,6 @@
 				OBJ_49 /* LICENSE.txt */,
 				OBJ_50 /* github_rsa.enc */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -272,6 +274,7 @@
 				OBJ_13 /* StandardLibrary_Tags.swift */,
 				OBJ_14 /* Tuxedo.swift */,
 				OBJ_15 /* Utils.swift */,
+				3A0B8014229479E4008925A6 /* Generator.swift */,
 			);
 			name = Tuxedo;
 			path = Sources/Tuxedo;
@@ -377,7 +380,7 @@
 				English,
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_35 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -408,6 +411,7 @@
 			files = (
 				OBJ_56 /* Common.swift in Sources */,
 				OBJ_57 /* Elements.swift in Sources */,
+				3A0B8015229479E4008925A6 /* Generator.swift in Sources */,
 				OBJ_58 /* TemplateInterpreter.swift in Sources */,
 				OBJ_59 /* TypedInterpreter.swift in Sources */,
 				OBJ_60 /* MatchResult.swift in Sources */,
@@ -429,6 +433,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				3A4551B322954BF700FAB21D /* Generator.swift in Sources */,
 				OBJ_76 /* ContextExtensions.swift in Sources */,
 				OBJ_77 /* StandardLibrary.swift in Sources */,
 				OBJ_78 /* StandardLibrary_DataTypes.swift in Sources */,

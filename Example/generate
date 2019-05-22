@@ -1,0 +1,7 @@
+#!/usr/bin/swift sh
+
+import Tuxedo // @tevelee
+
+let tuxedo = Tuxedo(globalVariables: ["name": "Teve"])
+let output = Generator(tuxedo: tuxedo).generate()
+print(output)
