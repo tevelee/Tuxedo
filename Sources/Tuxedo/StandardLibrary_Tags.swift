@@ -21,31 +21,32 @@ public extension StandardLibrary {
     static var tagSuffix: String = "%}"
 
     static var ifStatement: Pattern<String, TemplateInterpreter<String>> {
-        return Pattern([Keyword(tagPrefix + " if"), Variable<Bool>("condition"), Keyword(tagSuffix), TemplateVariable("body", options: .notTrimmed) {
+        return Pattern([Keyword(tagPrefix + " if"), Variable<Bool>("condition"), Keyword(tagSuffix), TemplateVariable("body", options: [.notTrimmed, .notInterpreted]) {
             guard let content = $0.value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
             return content
         }, Keyword("{%"), Keyword("endif"), Keyword("%}")]) {
             guard let condition = $0.variables["condition"] as? Bool, let body = $0.variables["body"] as? String else { return nil }
             if condition {
-                return body
+                return $0.interpreter.evaluate(body, context: $0.context)
             }
             return ""
         }
     }
 
     static var ifElseStatement: Pattern<String, TemplateInterpreter<String>> {
-        return Pattern([OpenKeyword(tagPrefix + " if"), Variable<Bool>("condition"), Keyword(tagSuffix), TemplateVariable("body", options: .notTrimmed) {
+        return Pattern([OpenKeyword(tagPrefix + " if"), Variable<Bool>("condition"), Keyword(tagSuffix), TemplateVariable("body", options: [.notTrimmed, .notInterpreted]) {
             guard let content = $0.value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
             return content
-        }, Keyword(tagPrefix + " else " + tagSuffix), TemplateVariable("else", options: .notTrimmed) {
+        }, Keyword(tagPrefix + " else " + tagSuffix), TemplateVariable("else", options: [.notTrimmed, .notInterpreted]) {
             guard let content = $0.value as? String, !content.contains(tagPrefix + " else " + tagSuffix) else { return nil }
             return content
         }, CloseKeyword(tagPrefix + " endif " + tagSuffix)]) {
             guard let condition = $0.variables["condition"] as? Bool, let body = $0.variables["body"] as? String else { return nil }
             if condition {
-                return body
+                return $0.interpreter.evaluate(body, context: $0.context)
             } else {
-                return $0.variables["else"] as? String
+                guard let elseValue = $0.variables["else"] as? String else { return nil }
+                return $0.interpreter.evaluate(elseValue, context: $0.context)
             }
         }
     }

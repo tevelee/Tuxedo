@@ -156,6 +156,11 @@ class TuxedoUnitTests: XCTestCase {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'Hello' contains 'art' }}"), "false")
     }
 
+    func testExists() {
+        XCTAssertEqual(Tuxedo().evaluate("Hello {% if name exists %}{{ name }}{% else %}Anonymus{% endif %}!"), "Hello Anonymus!")
+        XCTAssertEqual(Tuxedo().evaluate("Hello {% if name exists %}{{ name }}{% else %}Anonymus{% endif %}!", variables: ["name": "Teve"]), "Hello Teve!")
+    }
+
     func testMatches() {
         XCTAssertEqual(Tuxedo().evaluate("{{ 'Partly' matches '[A-Z]art[a-z]{2}' }}"), "true")
         XCTAssertEqual(Tuxedo().evaluate("{{ 'Partly' matches '\\d+' }}"), "false")

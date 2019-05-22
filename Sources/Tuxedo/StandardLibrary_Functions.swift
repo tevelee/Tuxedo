@@ -33,6 +33,7 @@ public extension StandardLibrary {
             escape,
             nl2br,
 
+            existsOperator,
             stringConcatenationOperator,
 
             multiplicationOperator,
@@ -185,6 +186,10 @@ public extension StandardLibrary {
 
     static var containsOperator: Function<Bool> {
         return infixOperator("contains") { (lhs: String, rhs: String) in lhs.contains(rhs) }
+    }
+
+    static var existsOperator: Function<Bool> {
+        return suffixOperator("exists") { (value: Any?) -> Bool in value != nil }
     }
 
     static var matchesOperator: Function<Bool> {
