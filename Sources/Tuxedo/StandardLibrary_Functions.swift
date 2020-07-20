@@ -669,6 +669,7 @@ public extension StandardLibrary {
         }
     }
 
+#if !os(Linux)
     static var methodCallWithIntResult: Function<Double> {
         return Function([Variable<Any>("lhs"), Keyword("."), Variable<String>("rhs", options: .notInterpreted)]) {
             if let lhs = $0.variables["lhs"] as? NSObjectProtocol,
@@ -679,5 +680,7 @@ public extension StandardLibrary {
             return nil
         }
     }
+#endif
+
 }
 //swiftlint:disable:this file_length
